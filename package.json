@@ -1,0 +1,25 @@
+{
+  "name": "recapi",
+  "version": "1.0.0",
+  "description": "RESTful media recording API",
+  "main": "recApi.js",
+  "scripts": {
+    "test": "echo"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  },
+  "dependencies": {
+    "agenda": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "config-yml": "^0.8.0",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.9"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/odtgit/recApi.git"
+  }
+}

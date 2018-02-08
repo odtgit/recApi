@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Recording scheduler</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, height=device-height, user-scalable=1, initial-scale=1" />
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+  <script>
+    function mydate(dateobj) {
+      D = new Date(dateobj)
+      month = ('0' + (D.getMonth() + 1)).slice(-2)
+      dates = ('0' + D.getDate()).slice(-2)
+      return D.getFullYear() + '-' + month + '-' + dates
+    }
+
+    function mytime(dateobj) {
+      D = new Date(dateobj)
+      hours = ('0' + D.getHours()).slice(-2)
+      mins = ('0' + D.getMinutes()).slice(-2)
+      return hours + ':' + mins
+    }
+
+    function startdate(dateobj) {
+      D = new Date(dateobj)
+      var weekday = new Array(7)
+      weekday[0] = "Sun"
+      weekday[1] = "Mon"
+      weekday[2] = "Tue"
+      weekday[3] = "Wed"
+      weekday[4] = "Thu"
+      weekday[5] = "Fri"
+      weekday[6] = "Sat"
+
+      var monthname = new Array(12)
+      monthname[0] = "Jan"
+      monthname[1] = "Feb"
+      monthname[2] = "Mar"
+      monthname[3] = "Apr"
+      monthname[4] = "May"
+      monthname[5] = "Jun"
+      monthname[6] = "Jul"
+      monthname[7] = "Aug"
+      monthname[8] = "Sep"
+      monthname[9] = "Oct"
+      monthname[10] = "Nov"
+      monthname[11] = "Dec"
+
+      realday = weekday[D.getDay()]
+      month = monthname[D.getMonth()]
+      hours = ('0' + D.getHours()).slice(-2)
+      mins = ('0' + D.getMinutes()).slice(-2)
+      return realday + ', ' + month + ' ' + D.getDate() + ' ' + hours + ':' + mins
+    }
+
+    $(document).ready(function () {
+      $('#date').val(mydate(Date.now())) //put todays date and time into the boxes
+      $('#time').val(mytime(Date.now()))
+
+      $('#recorder').on('submit', function (e) {
+        e.preventDefault()
+
+        $('#startAt').val($('#date').val() + ' ' + $('#time').val())
+        if ($('#name').val() === "") {
+          $('#name').val('Recording')
+        }
+        formData = $("#recorder").serialize()
+        $.ajax({
+          type: 'POST',
+          url: 'rec/',
+          cache: false,
+          data: formData,
+          success: function (result) {
+            $('#result').html('<p class="important" style="font-weight:bold">Job scheduled</p>').fadeIn(
+              100).fadeOut(2000)
+            getRecs()
+          },
+          error: function (request, error) {
+            $('#result').html(
+              '<p class="important" style="color:red;font-weight:bold">An error happened. Check input and log</p>'
+            ).fadeIn(100).fadeOut(2000)
+
+          }
+
+        })
+        return false
+      })
+
+      function getChannels() {
+        $.getJSON('channels/', function (data) {
+          if (data.length) {
+            $.each(data, function (i, v) {
+              channel = data[i]
+              $('#channel').append('<option value="' + channel.id + '">' + channel.name + '</option>')
+            })
+          } else {
+            $('#channel').append('<option value="">No channels found</option>')
+          }
+          $('#channel').selectmenu("refresh", true)
+        })
+      }
+
+      getChannels()
+
+      function getRecs() {
+        $.getJSON('rec/', function (data) {
+
+          if (data.length) {
+
+            $('#list').empty()
+            $('#list').append('<p style="font-weight:bold">Schedule</p>')
+            $('#list').removeClass('ui-screen-hidden')
+
+            for (var i = 0; i < data.length; i++) {
+              job = data[i]
+              output = '<li><a href="#" class="delbutton" id="' + job._id + '">' + job.name + ', ' + job.channel +
+                '<br/>' + startdate(job.startAt) + '</a></li>'
+              $('#list').append(output).listview('refresh')
+            }
+          } else {
+            $('#list').addClass('ui-screen-hidden').empty()
+          }
+        })
+      }
+
+      function Poll() {
+        getRecs()
+        setTimeout(Poll, 10000)
+      }
+
+      Poll()
+
+      $(document).on('click', '.delbutton', function () {
+        var listitem = $(this)
+        var del_id = listitem.attr("id")
+        $.ajax({
+          url: 'rec/' + del_id,
+          type: 'DELETE',
+          success: function (result) {
+            listitem.remove()
+            $('#result').html('<p class="important" style="font-weight:bold">Job cancelled</p>').fadeIn(
+              100).fadeOut(2000)
+            getRecs()
+          }
+        })
+        return false
+      })
+
+    })
+  </script>
+  <style>
+    #recorder,
+    #list,
+    .important {
+      margin: 0 auto;
+      width: 300px;
+      padding: 20px;
+      background: #f4f4f4;
+      border-radius: 3px;
+      -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .mediatype .ui-controlgroup-controls {
+      width: 100% !important;
+    }
+
+    .mediatype .ui-controlgroup-controls .ui-radio {
+      width: 50% !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div data-role="page" id="content">
+    <br>
+
+    <form id="recorder" method="POST" action="/rec" data-ajax="true" data-transition="pop">
+      <div id="chan" class="ui-field-contain">
+        <select name="channel" id="channel" data-native-menu="false">
+        </select>
+      </div>
+
+      <div id="details">
+        <label for="name">Show</label>
+        <input type="text" name="name" id="name" placeholder="Recording">
+        <label for="date">Start</label>
+        <input id="startAt" type="hidden" name="startAt" value="2018-01-30 18:00">
+        <input id="date" type="date" value="2018-01-30">
+        <input id="time" type="time" value="18:00">
+        <label for="slider-fill">Duration</label>
+        <input type="range" name="duration" id="slider-fill" value="60" min="15" max="300" step="15" data-highlight="true">
+        <br/>
+        <input type="submit" name="submit" value="Schedule" data-theme="b" />
+      </div>
+    </form>
+    <br/>
+    <div id="result"></div>
+    <br/>
+    <ul id="list" class="ui-screen-hidden" data-role="listview" data-inset="true" data-icon="delete">
+    </ul>
+    <br/>
+</body>
+
+</html>
