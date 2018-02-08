@@ -56,7 +56,7 @@ function asyncrec(recname, channel, duration = 60, id) {
         doc.remove()
         console.log(`Document ${id} removed from the database`)
       } else {
-        console.log('ERROR: Could not remove document from database')
+        console.log(`ERROR: Could not find document ${id} in database`)
       }
     })
   })
@@ -81,7 +81,6 @@ exports.list_rec = function (req, res) {
     res.json(rec)
   })
 }
-
 
 exports.create_rec = function (req, res) {
   var new_rec = new Rec(req.body)
@@ -138,12 +137,12 @@ exports.channels = function (req, res) {
 
 exports.playlistsm3u = function (req, res) {
   res.setHeader('Content-Type', 'text/plain')
-  var header = '#EXTM3U \n\n'
+  res.write('#EXTM3U \n\n')
   for (let chan of config.channels) {
     res.write('#EXTINF:-1 tvg-id="' + chan.id + '" tvg-name="' + chan.name + '" tvg-logo="' + chan.id + '.png", ' + chan.name + '\n' + chan.url + '\n\n')
   }
   //res.setHeader('Content-Type', 'application/x-mpegurl')
-  res.send(header + entry)
+  res.end()
 }
 
 function graceful() {
