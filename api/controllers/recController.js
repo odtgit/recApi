@@ -136,12 +136,11 @@ exports.channels = function (req, res) {
 }
 
 exports.playlistsm3u = function (req, res) {
-  res.setHeader('Content-Type', 'text/plain')
+  res.setHeader('Content-Type', 'application/x-mpegurl')
   res.write('#EXTM3U \n\n')
-  for (let chan of config.channels) {
-    res.write('#EXTINF:-1 tvg-id="' + chan.id + '" tvg-name="' + chan.name + '" tvg-logo="' + chan.id + '.png", ' + chan.name + '\n' + chan.url + '\n\n')
+  for (let [i, chan] of config.channels.entries()) {
+    res.write('#EXTINF:-1 tvg-id="' + i + '" tvg-name="' + chan.name + '" tvg-logo="' + chan.id + '.png", ' + chan.name + '\n' + chan.url + '\n\n')
   }
-  //res.setHeader('Content-Type', 'application/x-mpegurl')
   res.end()
 }
 
