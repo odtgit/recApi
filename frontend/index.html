@@ -73,17 +73,12 @@
           cache: false,
           data: formData,
           success: function (result) {
-            $('#result').html('<p class="important" style="font-weight:bold">Job scheduled</p>').fadeIn(
-              100).fadeOut(2000)
+            $("#submitPopup").addClass("active")
             getRecs()
           },
           error: function (request, error) {
-            $('#result').html(
-              '<p class="important" style="color:red;font-weight:bold">An error happened. Check input and log</p>'
-            ).fadeIn(100).fadeOut(2000)
-
+            $("#errorPopup").addClass("active")       
           }
-
         })
         return false
       })
@@ -109,15 +104,16 @@
 
           if (data.length) {
 
-            $('#list').empty()
-            $('#list').append('<p style="font-weight:bold">Schedule</p>')
-            $('#list').removeClass('ui-screen-hidden')
+              $('#list').empty()
+              $('#list').append('<p style="font-weight:bold">Schedule</p>')
+              $('#list').removeClass('ui-screen-hidden')
 
-            for (var i = 0; i < data.length; i++) {
-              job = data[i]
-              output = '<li><a href="#" class="delbutton" id="' + job._id + '">' + job.name + ', ' + job.channel +
-                '<br/>' + startdate(job.startAt) + '</a></li>'
-              $('#list').append(output).listview('refresh')
+              newdata = data.splice(0)
+              for (var i = 0; i < newdata.length; i++) {
+                job = newdata[i]
+                output = '<li><a href="#" class="delbutton" id="' + job._id + '">' + job.name + ', ' + job.channel +
+                  '<br/>' + startdate(job.startAt) + '</a></li>'
+                $('#list').append(output).listview('refresh')
             }
           } else {
             $('#list').addClass('ui-screen-hidden').empty()
@@ -125,26 +121,22 @@
         })
       }
 
-      function Poll() {
-        getRecs()
-        setTimeout(Poll, 10000)
-      }
-
-      Poll()
+      getRecs()
 
       $(document).on('click', '.delbutton', function () {
-        var listitem = $(this)
-        var del_id = listitem.attr("id")
-        $.ajax({
-          url: 'rec/' + del_id,
-          type: 'DELETE',
-          success: function (result) {
-            listitem.remove()
-            $('#result').html('<p class="important" style="font-weight:bold">Job cancelled</p>').fadeIn(
-              100).fadeOut(2000)
-            getRecs()
-          }
-        })
+        if (confirm("Are you sure?")) {
+          var listitem = $(this)
+          var del_id = listitem.attr("id")
+          $.ajax({
+            url: 'rec/' + del_id,
+            type: 'DELETE',
+            success: function (result) {
+              listitem.remove()
+              getRecs()
+            }
+          })
+          return false
+        }
         return false
       })
 
@@ -197,7 +189,35 @@
       </div>
     </form>
     <br/>
-    <div id="result"></div>
+<div data-role="popup" id="errorPopup" data-overlay-theme="b" data-theme="b" data-dismissible="true" style="max-width:400px;">
+    <div data-role="header" data-theme="a">
+    <p>Error</pe>
+    </div>
+    <div role="main" class="ui-content">
+        <p>Something went wrong</p>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">OK</a>
+    </div>
+</div>
+<div data-role="popup" id="submitPopup" data-overlay-theme="b" data-theme="b" data-dismissible="true" style="max-width:400px;">
+    <div data-role="header" data-theme="a">
+    <p>Success</pe>
+    </div>
+    <div role="main" class="ui-content">
+        <p>Recording scheduled</p>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">OK</a>
+    </div>
+</div>
+<div data-role="popup" id="cancelPopup" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+    <div data-role="header" data-theme="a">
+    <p>Cancel?</pe>
+    </div>
+    <div role="main" class="ui-content">
+        <h1 class="ui-title">Are you sure you want to cancel this recording?</h1>
+    <p>This action cannot be undone.</p>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Back</a>
+        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">OK</a>
+    </div>
+</div>
     <br/>
     <ul id="list" class="ui-screen-hidden" data-role="listview" data-inset="true" data-icon="delete">
     </ul>
