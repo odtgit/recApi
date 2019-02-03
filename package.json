@@ -18,8 +18,8 @@
     "express": "^4.16.2",
     "mongoose": "^4.13.9"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/odtgit/recApi.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/odtgit/recApi.git"
   }
 }

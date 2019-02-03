@@ -1,6 +1,6 @@
 # recApi
 
-A node.js REST API to schedule jobs in agenda to spawn VLC to record stuff - URIs or predefined channels.
+A node.js REST API to schedule jobs in agenda to spawn ffmpeg to record stuff using URIs or predefined channels.
 
 This is a learning project, expect everything to break.
 
@@ -10,4 +10,4 @@ Start with:
 
 npm install
 
-node start recApi.js
+node recApi.js

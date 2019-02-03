@@ -1,11 +1,12 @@
 # rename this file to config.yml
 ---
 title: 'URLs and config for scheduler API'
-lastUpdated: '2018-02-01'
+lastUpdated: '2019-02-03'
 # where to store the recordings 
-recordingDir: '.'
+recordingDir: './tmp/'
 # safety is a number in seconds to start early and finish later than scheduled
 safety: 60 
+port: 23001
 # mongodb url
 dburl: 'mongodb://localhost/recApiTest'
 

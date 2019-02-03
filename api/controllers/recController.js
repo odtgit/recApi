@@ -39,17 +39,17 @@ function asyncrec(recname, channel, duration = 60, id) {
   const {
     spawn
   } = require('child_process')
-  const vlc = spawn('vlc', ['-I dummy', '--quiet', '--run-time', duration, channel, '--sout', 'file/ts:' + filename + '', 'vlc://quit'])
+  const ffmpeg = spawn('ffmpeg', ['-d', '-y', '-loglevel', 'quiet', '-i', channel, '-t', duration, '-map', '0:0?', '-map', '0:1?', '-map', '0:3?', '-c', 'copy', filename])
 
-  vlc.stdout.on('data', (data) => {
+  ffmpeg.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`)
   })
 
-  vlc.stderr.on('data', (data) => {
+  ffmpeg.stderr.on('data', (data) => {
     console.log(`stderr: ${data}`)
   })
 
-  vlc.on('close', (code) => {
+  ffmpeg.on('close', (code) => {
     console.log(`Job \"${recname}\" finished at ${timestamp()} with code ${code}`)
     Rec.findById(id, function (err, doc) {
       if (!err) {

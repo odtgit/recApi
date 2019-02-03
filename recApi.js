@@ -2,11 +2,11 @@
 
 var express = require('express'),
   app = express(),
-  port = process.env.PORT || 23000,
+  config = require('config-yml'),
+  port = config.port,
   mongoose = require('mongoose'),
   Rec = require('./api/models/recModel'), //created model loading here
-  bodyParser = require('body-parser'),
-  config = require('config-yml')
+  bodyParser = require('body-parser')
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise
