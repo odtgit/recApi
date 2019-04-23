@@ -6,6 +6,12 @@ This is a learning project, expect everything to break.
 
 Dependencies are: ffmpeg, mongodb, express, mongoose, agenda, body-parser, config-yml.
 
+## Screenshot of UI (dark reader)
+
+![Screenshot](recApi_UI.png)
+
+
+
 ## Installation
 
 ```
@@ -17,7 +23,7 @@ npm install
 ## Usage
 
 ```
-node start
+npm start
 ```
 
 ## Docker usage
@@ -25,3 +31,4 @@ node start
 ```
 docker-compose up -d
 ```
+
