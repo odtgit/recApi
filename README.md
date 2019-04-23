@@ -4,10 +4,24 @@ A node.js REST API to schedule jobs in agenda to spawn ffmpeg to record stuff us
 
 This is a learning project, expect everything to break.
 
-Dependencies are: express, mongoose, agenda, body-parser, config-yml.
+Dependencies are: ffmpeg, mongodb, express, mongoose, agenda, body-parser, config-yml.
 
-Start with:
+## Installation
 
+```
+git clone https://github.com/odtgit/recApi
+cd recApi
 npm install
+```
 
-node recApi.js
+## Usage
+
+```
+node start
+```
+
+## Docker usage
+
+```
+docker-compose up -d
+```

@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  recapi:
+    container_name: recapi
+    image: odtdock/recapi
+    restart: always
+    build: .
+    volumes:
+      - /glust/docker/recapi/config.yml:/app/config.yml
+      - /data/rec:/rec
+    ports:
+      - "23030:23030"
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - /glust/docker/mongo/data:/data/db
+

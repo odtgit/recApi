@@ -1,10 +1,10 @@
 {
   "name": "recapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "RESTful media recording API",
   "main": "recApi.js",
   "scripts": {
-    "test": "echo"
+    "start": "node recApi.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/odtgit/recApi.git"
+    "url": "https://github.com/odtgit/recApi"
   }
 }
