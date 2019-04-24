@@ -5,7 +5,7 @@ FROM node:8-alpine
 COPY --from=0 / /
 
 # our app
-RUN mkdir -p /app /rec
+RUN mkdir -p /app /data/rec
 RUN apk add -U tzdata
 WORKDIR /app
 COPY package*.json /app/

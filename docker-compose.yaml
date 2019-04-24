@@ -9,7 +9,7 @@ services:
     build: .
     volumes:
       - /glust/docker/recapi/config.yml:/app/config.yml
-      - /data/rec:/rec
+      - /data/rec:/data/rec
     ports:
       - "23030:23030"
     environment:

@@ -21,9 +21,11 @@ npm install
 ```
 
 ## Configuration
+```
+cp config.yml.example config.yml
+```
 
-Copy the config.yml.example file to config.yml and make your changes there. The docker-compose file has examples of bind mounds for external config and storage.
-
+Make changes as you see fit, docker-compose has example of bind mounts for external config and storage.
 
 ## Start
 
@@ -34,7 +36,7 @@ npm start
 ## Docker build and start
 
 ```
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 ## Usage

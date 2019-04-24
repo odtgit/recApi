@@ -1,9 +1,9 @@
 # rename this file to config.yml
 ---
 title: 'URLs and config for scheduler API'
-lastUpdated: '2019-02-03'
+lastUpdated: '2019-04-24'
 # where to store the recordings 
-recordingDir: '/rec/'
+recordingDir: '/data/rec/'
 # safety is a number in seconds to start early and finish later than scheduled
 safety: 60 
 port: 23030
