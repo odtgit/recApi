@@ -11,16 +11,19 @@ var agenda = new Agenda({
   name: 'API'
 })
 
+console.log('Loading channels from config')
+
 for (var chan of config.channels) {
   console.log(`chan ${chan.id} url ${chan.url}`)
 }
 
 function timestamp() {
-  var now = new Date(Date.now() + 60 * 60000).toISOString().replace(/T/, '_').replace(/\..+/, '').replace(/(\:\d{2})$/, '') // conversion to UTC + 1 hour
+  var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+  var now = new Date(Date.now() - tzoffset).toISOString().slice(0,-8).replace(/T/,'_').replace(/\:/,'') // 2019-04-24_1130
   return now
 }
 
-console.log(timestamp());
+console.log('Timestamp check:', timestamp());
 
 function asyncrec(recname, channel, duration = 60, id) {
   duration = duration * 60 // convert minutes to seconds

@@ -1,9 +1,10 @@
 version: "3.4"
 
 services:
-  recapi:
+  recapi: 
     container_name: recapi
-    image: odtdock/recapi
+    depends_on:
+      - mongo
     restart: always
     build: .
     volumes:
@@ -11,12 +12,14 @@ services:
       - /data/rec:/rec
     ports:
       - "23030:23030"
-    links:
-      - mongo
+    environment:
+      - "TZ=Europe/Stockholm"
 
   mongo:
     container_name: mongo
     image: mongo
+    environment:
+      - "TZ=Europe/Stockholm"
     volumes:
       - /glust/docker/mongo/data:/data/db
 

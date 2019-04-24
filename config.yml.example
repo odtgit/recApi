@@ -3,12 +3,12 @@
 title: 'URLs and config for scheduler API'
 lastUpdated: '2019-02-03'
 # where to store the recordings 
-recordingDir: './tmp/'
+recordingDir: '/rec/'
 # safety is a number in seconds to start early and finish later than scheduled
 safety: 60 
-port: 23001
+port: 23030
 # mongodb url
-dburl: 'mongodb://localhost/recApiTest'
+dburl: 'mongodb://mongo/recApi'
 
 # example channels, replace with whatever streams you got
 

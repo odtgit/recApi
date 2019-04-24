@@ -4,9 +4,19 @@ var express = require('express'),
   app = express(),
   config = require('config-yml'),
   port = config.port,
+  morgan = require('morgan'),
   mongoose = require('mongoose'),
   Rec = require('./api/models/recModel'), //created model loading here
   bodyParser = require('body-parser')
+
+require('console-stamp')(console, '[HH:MM:ss.l]')
+
+morgan.format('mydate', function() {
+    var df = require('dateformat')
+    return df(new Date(), 'HH:MM:ss.l')
+})
+
+app.use(morgan('[:mydate] :method :url :status :res[content-length] - :remote-addr - :response-time ms'))
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise
