@@ -8,7 +8,7 @@ recordingDir: '/data/rec/'
 safety: 60 
 port: 23040
 # mongodb url
-dburl: 'mongodb://mongo/recApi'
+dburl: 'mongodb://mongo.git/recApi'
 
 # example channels, replace with whatever streams you got
 
