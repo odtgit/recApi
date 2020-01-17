@@ -1,5 +1,5 @@
-FROM jrottenberg/ffmpeg:3.4-alpine
-FROM node:8-alpine
+FROM jrottenberg/ffmpeg:4.1-alpine
+FROM mhart/alpine-node
 
 # copy ffmpeg bins from first image
 COPY --from=0 / /
@@ -23,8 +23,8 @@ RUN mkdir -p /app /data/rec
 RUN apk add -U tzdata
 WORKDIR /app
 COPY package*.json /app/
-RUN npm install --production
+RUN npm ci --prod
 COPY . /app
 EXPOSE 23030
 USER node
-CMD [ "npm", "start" ]
+CMD [ "node", "recApi.js" ]
