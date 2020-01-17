@@ -11,7 +11,12 @@ var express = require('express'),
 
 require('console-stamp')(console, {pattern: 'isoDateTime' })
 
-app.use(morgan('[:date[iso]] [:method]    :url :status :res[content-length] - :remote-addr - :response-time ms'))
+morgan.format('mydate', function() {
+      var df = require('dateformat')
+      return df(new Date(), "isoDateTime")
+})
+
+app.use(morgan('[:mydate] [:method]    :url :status :res[content-length] - :remote-addr - :response-time ms'))
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise
