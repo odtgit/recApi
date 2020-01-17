@@ -9,19 +9,15 @@ var express = require('express'),
   Rec = require('./api/models/recModel'), //created model loading here
   bodyParser = require('body-parser')
 
-require('console-stamp')(console, '[HH:MM:ss.l]')
+require('console-stamp')(console, {pattern: 'isoDateTime' })
 
-morgan.format('mydate', function() {
-    var df = require('dateformat')
-    return df(new Date(), 'HH:MM:ss.l')
-})
-
-app.use(morgan('[:mydate] :method :url :status :res[content-length] - :remote-addr - :response-time ms'))
+app.use(morgan('[:date[iso]] [:method]    :url :status :res[content-length] - :remote-addr - :response-time ms'))
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise
-mongoose.connect(config.dburl, {
-  useMongoClient: true
+mongoose.connect(config.dburl, { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
 
 mongoose.connection.on('error', function () {
@@ -30,7 +26,7 @@ mongoose.connection.on('error', function () {
 })
 
 mongoose.connection.once('open', function () {
-  console.log("Successfully connected to the recordings database")
+  console.log("Successfully connected to database")
 })
 
 app.use(bodyParser.urlencoded({

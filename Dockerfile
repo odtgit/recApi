@@ -25,6 +25,6 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm ci --prod
 COPY . /app
-EXPOSE 23030
+EXPOSE 23040
 USER node
 CMD [ "node", "recApi.js" ]

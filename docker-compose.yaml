@@ -1,25 +1,27 @@
 version: "3.4"
 
 services:
-  recapi: 
-    container_name: recapi
+
+  mongo.git:
+    image: mongo
+    container_name: mongo.git
+    restart: always
+    environment:
+      - "TZ=Europe/Stockholm"
+    volumes:
+      - ./datadb:/data/db
+      - ./configdb:/data/configdb
+
+  recapi.git: 
+    container_name: recapi.git
     depends_on:
-      - mongo
+      - mongo.git
     restart: always
     build: .
     volumes:
-      - /glust/docker/recapi/config.yml:/app/config.yml
+      - ./config.yml:/app/config.yml
       - /data/rec:/data/rec
     ports:
-      - "23030:23030"
+      - "23040:23040"
     environment:
       - "TZ=Europe/Stockholm"
-
-  mongo:
-    container_name: mongo
-    image: mongo
-    environment:
-      - "TZ=Europe/Stockholm"
-    volumes:
-      - /glust/docker/mongo/data:/data/db
-
