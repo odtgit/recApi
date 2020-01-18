@@ -16,6 +16,15 @@ morgan.format("mydate", function() {
   return df(new Date(), "isoDateTime");
 });
 
+//get real ip if passed by nginx
+morgan.token("remote-addr", function(req) {
+  return (
+    req.headers["x-real-ip"] ||
+    req.headers["x-forwarded-for"] ||
+    req.connection.remoteAddress
+  );
+});
+
 app.use(
   morgan(
     "[:mydate] [:method]    :url :status :res[content-length] - :remote-addr - :response-time ms"
