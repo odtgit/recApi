@@ -1,6 +1,4 @@
-"use strict";
-
-export default function(app) {
+module.exports = function(app) {
   var recorder = require("../controllers/recController");
 
   app
