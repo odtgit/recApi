@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
-  <script>
+  <script type="text/javascript">
     function mydate(dateobj) {
       D = new Date(dateobj)
       month = ('0' + (D.getMonth() + 1)).slice(-2)
@@ -191,17 +191,18 @@
         <input id="date" type="date" value="2018-01-30">
         <input id="time" type="time" value="18:00">
         <label for="slider-fill">Duration</label>
-        <input type="range" name="duration" id="slider-fill" value="60" min="15" max="300" step="15" data-highlight="true">
-        <br/>
+        <input type="range" name="duration" id="slider-fill" value="60" min="15" max="300" step="15"
+          data-highlight="true">
+        <br />
         <input type="submit" name="submit" value="Schedule" data-theme="b" />
       </div>
     </form>
-    <br/>
+    <br />
     <div id="result"></div>
-    <br/>
+    <br />
     <ul id="list" class="ui-screen-hidden" data-role="listview" data-inset="true" data-icon="delete">
     </ul>
-    <br/>
+    <br />
 </body>
 
 </html>
