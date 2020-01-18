@@ -1,3 +1,9 @@
+*.md
+recApi_UI.png
 config.yml
 datadb/
 configdb/
+.gitignore
+.dockerignore
+Dockerfile
+.git/
