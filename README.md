@@ -10,32 +10,31 @@ It requires ffmpeg and mongodb available. Node dependencies are listed in the pa
 
 ![Screenshot](recApi_UI.png)
 
-
-
 ## Installation
 
-```
+```bash
 git clone https://github.com/odtgit/recApi
 cd recApi
 npm install
 ```
 
 ## Configuration
-```
-cp config.yml.example config.yml
+
+```bash
+cp config_example.yml config.yml
 ```
 
 Make changes as you see fit, docker-compose has example of bind mounts for external config and storage.
 
 ## Start
 
-```
-npm start
+```bash
+node recApi.js
 ```
 
 ## Docker build and start
 
-```
+```bash
 docker-compose up -d --build
 ```
 
