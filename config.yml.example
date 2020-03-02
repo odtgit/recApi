@@ -1,18 +1,19 @@
 # rename this file to config.yml
 ---
-title: "URLs and config for scheduler API"
-lastUpdated: "2020-01-17"
-# where to store the recordings
-recordingDir: "/data/rec/"
+title: 'URLs and config for scheduler API'
+lastUpdated: '2020-01-17'
+# where to store the recordings 
+recordingDir: '/data/rec/'
 # safety is a number in seconds to start early and finish later than scheduled
-safety: 60
+safety: 60 
 port: 23040
 # mongodb url
-dburl: "mongodb://mongo.git/recApi"
+dburl: 'mongodb://mongo.git/recApi'
 
 # example channels, replace with whatever streams you got
 
 channels:
+
   - name: Raadio 2
     url: http://icecast.err.ee:80/raadio2.mp3
     id: raadio2
@@ -24,3 +25,4 @@ channels:
   - name: Klassikaraadio
     url: http://icecast.err.ee:80/klassikaraadio.mp3
     id: klassika
+

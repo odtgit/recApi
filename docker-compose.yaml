@@ -1,6 +1,7 @@
 version: "3.4"
 
 services:
+
   mongo.git:
     image: mongo
     container_name: mongo.git
@@ -11,7 +12,7 @@ services:
       - ./datadb:/data/db
       - ./configdb:/data/configdb
 
-  recapi.git:
+  recapi.git: 
     container_name: recapi.git
     depends_on:
       - mongo.git
