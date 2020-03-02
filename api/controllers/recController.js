@@ -1,5 +1,3 @@
-"use strict";
-
 var config = require("config-yml");
 
 var mongoose = require("mongoose"),
