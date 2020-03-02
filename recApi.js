@@ -1,5 +1,3 @@
-"use strict";
-
 var express = require("express"),
   app = express(),
   config = require("config-yml"),
@@ -61,7 +59,7 @@ app.get("/", function(req, res) {
   });
 });
 
-var routes = require("./api/routes/recRoutes"); //importing routes
+var routes = require("./api/routes/recRoutes").default.default; //importing routes
 routes(app); //register the routes
 
 app.use(function(req, res) {
