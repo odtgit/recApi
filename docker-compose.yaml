@@ -4,18 +4,19 @@ services:
 
   mongo.git:
     image: mongo
-    container_name: mongo.git
+    container_name: recapidb.git
     restart: always
     environment:
       - "TZ=Europe/Stockholm"
     volumes:
-      - ./datadb:/data/db
-      - ./configdb:/data/configdb
+      - ./db/data:/data/db
+      - ./db/config:/data/configdb
 
   recapi.git: 
+    image: recapi.git
     container_name: recapi.git
     depends_on:
-      - mongo.git
+      - recapidb.git
     restart: always
     build: .
     volumes:

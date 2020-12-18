@@ -1,5 +1,4 @@
 config.yml
 node_modules/*
 tmp/*
-datadb/
-configdb/
+db/*
