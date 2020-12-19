@@ -16,5 +16,5 @@ module.exports = function (app) {
 
   app.route('/playlist.m3u')
     .get(recorder.playlistsm3u)
-    
+
 }
