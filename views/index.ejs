@@ -5,9 +5,18 @@
   <title>Recording scheduler</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, height=device-height, user-scalable=1, initial-scale=1" />
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.css"
+    integrity="sha512-z2AFOVKBqcloFCT+Ugs0icqTfC8fBoGq2zP60MlESnL9CdusjEyVnNvHgs3RWtdMJxGkP0FDWfNp/puIP9CctA=="
+    crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    integrity="sha512-jGR1T3dQerLCSm/IGEGbndPwzszJBlKQ5Br9vuB0Pw2iyxOy+7AK+lJcCC8eaXyz/9du+bkCy4HXxByhxkHf+w=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mobile/1.4.5/jquery.mobile.min.js"
+    integrity="sha512-FbnNPigZZCDhMM22ezvan3xN2/E/oBd9GxqtpiBcK1VZuzBAt0V1EmTtteoYuYxWrqwqBA6zb1OTB887QSjAsw=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+    integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
+    crossorigin="anonymous"></script>
   <script>
     function mydate(dateobj) {
       D = new Date(dateobj)
@@ -115,7 +124,8 @@
 
             for (var i = 0; i < data.length; i++) {
               job = data[i]
-              output = '<li><a href="#" class="delbutton" id="' + job._id + '">' + job.name + ', ' + job.channel +
+              output = '<li><a href="#" class="delbutton" id="' + job._id + '">' + job.name + ', ' + job
+                .channel +
                 '<br/>' + startdate(job.startAt) + '</a></li>'
               $('#list').append(output).listview('refresh')
             }
@@ -132,6 +142,8 @@
 
       Poll()
 
+
+
       $(document).on('click', '.delbutton', function () {
         var listitem = $(this)
         var del_id = listitem.attr("id")
@@ -147,6 +159,10 @@
         })
         return false
       })
+
+      $('button .logout').click(function () {
+        $.cookie('_forward_auth', "", -1);
+      });
 
     })
   </script>
@@ -180,8 +196,10 @@
 <body>
   <div data-role="page" id="content">
     <br>
-
     <form id="recorder" method="POST" action="/rec" data-ajax="true" data-transition="pop">
+      <div id="hello">
+        <p>Hello <%- userName -%></p>
+      </div>
       <div id="chan" class="ui-field-contain">
         <select name="channel" id="channel" data-native-menu="false">
         </select>
@@ -195,17 +213,19 @@
         <input id="date" type="date" value="2018-01-30">
         <input id="time" type="time" value="18:00">
         <label for="slider-fill">Duration</label>
-        <input type="range" name="duration" id="slider-fill" value="60" min="15" max="300" step="15" data-highlight="true">
-        <br/>
+        <input type="range" name="duration" id="slider-fill" value="60" min="15" max="300" step="15"
+          data-highlight="true">
+        <br>
         <input type="submit" name="submit" value="Schedule" data-theme="b" />
+        <br>
       </div>
     </form>
-    <br/>
+    <br />
     <div id="result"></div>
-    <br/>
+    <br />
     <ul id="list" class="ui-screen-hidden" data-role="listview" data-inset="true" data-icon="delete">
     </ul>
-    <br/>
+  </div>
 </body>
 
 </html>

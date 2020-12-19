@@ -9,18 +9,20 @@ var express = require('express'),
   Rec = require('./api/models/recModel'), //created model loading here
   bodyParser = require('body-parser')
 
-require('console-stamp')(console, {pattern: 'isoDateTime' })
+require('console-stamp')(console, {
+  pattern: 'isoDateTime'
+})
 
-morgan.format('mydate', function() {
-      var df = require('dateformat')
-      return df(new Date(), "isoDateTime")
+morgan.format('mydate', function () {
+  var df = require('dateformat')
+  return df(new Date(), "isoDateTime")
 })
 
 app.use(morgan('[:mydate] [:method]    :url :status :res[content-length] - :remote-addr - :response-time ms'))
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise
-mongoose.connect(config.dburl, { 
+mongoose.connect(config.dburl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -39,12 +41,24 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-app.get('/', function (req, res) { // serve the frontend
-  res.sendFile('frontend/index.html', {
-    root: __dirname
-  })
-})
+//Set view engine to ejs
+app.set("view engine", "ejs");
+//Tell Express where we keep our index.ejs
+app.set("views", __dirname + "/views");
 
+//Use body-parser
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+//Instead of sending Hello World, we render index.ejs
+app.get("/", (req, res) => {
+  var email = req.headers['x-forwarded-user'];
+  var userName = email.substring(0, email.lastIndexOf("@"));
+  res.render("index", {
+    userName: userName
+  });
+});
 
 var routes = require('./api/routes/recRoutes') //importing routes
 routes(app) //register the routes

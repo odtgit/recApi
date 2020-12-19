@@ -1,6 +1,6 @@
 {
   "name": "recapi",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "RESTful media recording API",
   "main": "recApi.js",
   "scripts": {
@@ -9,17 +9,18 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.6"
   },
   "dependencies": {
-    "agenda": "^2.3.0",
+    "agenda": "^3.1.0",
     "body-parser": "^1.19.0",
     "config-yml": "^0.10.3",
-    "express": "^4.17.1",
-    "mongoose": "^5.8.7",
     "console-stamp": "^0.2.9",
-    "morgan": "^1.9.1",
-    "dateformat": "^3.0.3"
+    "dateformat": "^4.3.1",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.8",
+    "morgan": "^1.10.0"
   },
   "repository": {
     "type": "git",

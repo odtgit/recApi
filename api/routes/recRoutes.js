@@ -13,6 +13,8 @@ module.exports = function (app) {
 
   app.route('/channels')
     .get(recorder.channels)
+
   app.route('/playlist.m3u')
     .get(recorder.playlistsm3u)
+    
 }
