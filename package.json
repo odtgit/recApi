@@ -1,6 +1,6 @@
 {
   "name": "recapi",
-  "version": "1.0.4",
+  "version": "2020.12.1",
   "description": "RESTful media recording API",
   "main": "recApi.js",
   "scripts": {

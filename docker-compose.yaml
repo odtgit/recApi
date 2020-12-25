@@ -2,22 +2,22 @@ version: "3.4"
 
 services:
 
-  mongo.git:
+  mongo:
     image: mongo
     container_name: recapidb.git
-    restart: always
+    restart: unless-stopped
     environment:
       - "TZ=Europe/Stockholm"
     volumes:
       - ./db/data:/data/db
       - ./db/config:/data/configdb
 
-  recapi.git: 
-    image: recapi.git
+  recapi: 
     container_name: recapi.git
+    image: odtdock/recapi
     depends_on:
-      - recapidb.git
-    restart: always
+      - mongo
+    restart: unless-stopped
     build: .
     volumes:
       - ./config.yml:/app/config.yml

@@ -19,7 +19,7 @@ for (var chan of config.channels) {
 
 function timestamp() {
   var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-  var now = new Date(Date.now() - tzoffset).toISOString().slice(0,-8).replace(/T/,'_').replace(/\:/,'') // 2019-04-24_1130
+  var now = new Date(Date.now() - tzoffset).toISOString().slice(0, -8).replace(/T/, '_').replace(/\:/, '') // 2019-04-24_1130
   return now
 }
 
@@ -115,7 +115,7 @@ exports.read_rec = function (req, res) {
 }
 
 exports.delete_rec = function (req, res) {
-  Rec.remove({
+  Rec.deleteMany({
     _id: req.params.recId
   }, function (err, rec) {
     if (err) {
