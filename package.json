@@ -18,7 +18,7 @@
     "console-stamp": "^3.0.3",
     "dateformat": "^4.5.1",
     "ejs": "^3.1.6",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mongoose": "^6.0.5",
     "morgan": "^1.10.0"
   },
